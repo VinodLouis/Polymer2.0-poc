@@ -1,13 +1,21 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../components/forecast-weather/forecast-weather.html">
 <dom-module id="weather-app">
   <template>
+    <style is="custom-style" include="iron-flex iron-flex-factors iron-flex-alignment"></style>
     <style>
       :host {
         display: block;
+        padding:25px;
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    <div class="flex layout horizontal center-justified">Wether Forecast for the City [[city]].</div>
+    <div class="flex layout horizontal wrap">
+      <div class="layout flex-12"> 
+        <forecast-weather selected-city="{{city}}"></forecast-weather> 
+      </div>
+    </div>
   </template>
 
   <script>
@@ -19,9 +27,9 @@
       static get is() { return 'weather-app'; }
       static get properties() {
         return {
-          prop1: {
+          city: {
             type: String,
-            value: 'weather-app'
+            value: 'pune,in'
           }
         };
       }

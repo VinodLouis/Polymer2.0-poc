@@ -1,0 +1,33 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="app-global">
+  <template>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class AppGlobal extends Polymer.Element {
+      static get is() { return 'app-global'; }
+      static get properties() {
+        return {
+          URL: {
+            type: Object,
+            value: {
+              APPID : "f5ba047355d7218604663c0d1a430082",
+              base : "http://api.openweathermap.org/data/2.5/",
+              weather : {
+                current : "weather",
+                forecast : "forecast",
+                icon : "http://openweathermap.org/img/w/"
+              }
+            }
+          }
+        };
+      }
+    }
+
+    window.customElements.define(AppGlobal.is, AppGlobal);
+  </script>
+</dom-module>

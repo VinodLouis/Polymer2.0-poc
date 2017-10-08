@@ -1,0 +1,61 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../app-global.html">
+<dom-module id="weather-item">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment">
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="flex">
+      <div>{{getTimeString(timeData.dt_txt)}}</div>
+      <template is="dom-repeat" items="{{timeData.weather}}" as="weather">
+        <div class="flex layout horizontal">
+          <div class="flex-12">{{weather.main}} - {{weather.description}}</div>
+          <div class="flex">
+            <img src="{{getImageIconURL(weather.icon)}}" />
+          </div>
+        </div>
+      </template>
+      <div>
+       Temp : {{timeData.main.temp}} &#8490;
+      </div>
+    </div>
+    <app-global id="constants"></app-global>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class WeatherItem extends Polymer.Element {
+      static get is() { return 'weather-item'; }
+      static get properties() {
+        return {
+          timeData: {
+            type: Object
+          }
+        };
+      }
+
+      getTimeString(dt){
+        var temp = new Date(dt);
+        temp = temp.toLocaleTimeString();
+        temp = temp.split(" ");
+        return temp[0].split(":")[0] + " " + temp[1];
+      }
+
+      getImageIconURL(icon){
+        return this.$.constants.URL.weather.icon + icon + ".png";
+      }
+      
+
+      
+    }
+
+    window.customElements.define(WeatherItem.is, WeatherItem);
+  </script>
+</dom-module>

@@ -1,0 +1,47 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../app-global.html">
+<link rel="import" href="./weather-item.html">
+<dom-module id="weather-card">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment">
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="flex">
+      <div> {{getDateString(weatherData.date)}}</div>
+      <template is="dom-repeat" items="{{weatherData.value}}" as="timeWeather">
+        <weather-item time-data={{timeWeather}}></weather-item>
+      </template>
+    </div>
+    
+    <app-global id="constants"></app-global>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class WeatherCard extends Polymer.Element {
+      static get is() { return 'weather-card'; }
+      static get properties() {
+        return {
+          weatherData: {
+            type: String
+          }
+        };
+      }
+
+      getDateString(dt){
+        return (new Date(dt)).toDateString();
+      }
+
+      
+    }
+
+    window.customElements.define(WeatherCard.is, WeatherCard);
+  </script>
+</dom-module>

@@ -1,0 +1,84 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../app-global.html">
+<link rel="import" href="../weather-card/weather-card.html">
+<dom-module id="forecast-weather">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-factors iron-flex-alignment">
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="flex layout horizontal wrap">
+      <template is="dom-repeat" items="{{dataForecast}}" as="dayWeather">
+        <weather-card class="flex-3" weather-data="{{dayWeather}}"></weather-card>
+      </template>
+    </div>
+    <app-global id="constants"></app-global>
+    <iron-ajax id="forecastRequest" type="GET" handle-as="json" on-response="_forecastRequestSuccess" on-error="_forecastRequestError"><iron-ajax>
+
+  </template>
+  
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class ForecastWeather extends Polymer.Element {
+      static get is() { return 'forecast-weather'; }
+      static get properties() {
+        return {
+          selectedCity: {
+            type: String,
+            observer:'_citySelcted'
+          },
+
+          dataForecast:{
+            type:Array,
+            value:[]
+          }
+        };
+      }
+
+      _citySelcted(val){
+        if(val){
+          this.loadForecastData();
+        }
+      }
+
+      loadForecastData(){
+        this.$.forecastRequest.url = this.$.constants.URL.base + this.$.constants.URL.weather.forecast;
+        this.$.forecastRequest.params = {
+          q : this.selectedCity,
+          appid : this.$.constants.URL.APPID
+        } 
+        this.$.forecastRequest.generateRequest();
+      }
+
+      _forecastRequestError(){
+
+      }
+
+      _forecastRequestSuccess(result){
+        result.detail.response.list.sort((el1,el2)=>el1.dt-el2.dt);
+        var dataDayWise = [];
+        result.detail.response.list.forEach((el)=>{
+          if(dataDayWise.length == 0 || dataDayWise[dataDayWise.length-1].date != el.dt_txt.split(" ")[0]){
+            dataDayWise.push({
+              date : el.dt_txt.split(" ")[0],
+              value : [el]
+            })
+          }else{
+            dataDayWise[dataDayWise.length-1].value.push(el);
+          }
+        });
+        this.set('dataForecast',dataDayWise);
+        dataDayWise = [];
+      }
+    }
+
+    window.customElements.define(ForecastWeather.is, ForecastWeather);
+  </script>
+</dom-module>
