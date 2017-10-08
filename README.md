@@ -2,24 +2,32 @@
 
 Weater forecasting
 
-## Install the Polymer-CLI
+## Built on 
+1. Polymer2.0
+2. Web-components
+3. ES6
+4. HTML/CSS
+5. OPEN data API
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
 
-## Viewing Your Application
+Application is live at [DEMO](http://www.vinodlouis.com/demos/weather-forecast)
+## Runnig the Application
 
-```
-$ polymer serve
-```
+GLobal dependency on [Polymer CLI](https://www.npmjs.com/package/polymer-cli) as its used as development server. The other libraries depedency are listed in bower.json file
 
-## Building Your Application
+1. Clone the repo
+2. Do an `bower install`
+3. serve via `polymer serve`
+4. If all goes well application will be running on http://localhost:8081.
+
+
+## Building  Application
 
 ```
 $ polymer build
 ```
 
-This will create builds of your application in the `build/` directory, optimized to be served in production. You can then serve the built versions by giving `polymer serve` a folder to serve from:
-
+The buid configurations are written in polymer.json file. once builded can be checked via 
 ```
 $ polymer serve build/default
 ```
@@ -30,4 +38,4 @@ $ polymer serve build/default
 $ polymer test
 ```
 
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+Application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run application's test suite locally.
