@@ -2,18 +2,32 @@
 <link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../app-global.html">
 <link rel="import" href="./weather-item.html">
+<link rel="import" href="../../shared-styles.html">
 <dom-module id="weather-card">
   <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment">
+    <style is="custom-style" include="iron-flex iron-flex-alignment shared-styles">
     <style>
       :host {
         display: block;
       }
+
+      .weather-card-wrapper{
+      
+          margin:5px;
+      }
+
+      .heading-main{
+        background-color: #bae1ff;
+        font-size: 18px;
+        padding:10px 0px ;
+        font-weight:bold;
+        text-align: center;
+      }
     </style>
-    <div class="flex">
-      <div> {{getDateString(weatherData.date)}}</div>
+    <div class="flex weather-card-wrapper">
+      <div class="heading-main"> {{getDateString(weatherData.date)}}</div>
       <template is="dom-repeat" items="{{weatherData.value}}" as="timeWeather">
-        <weather-item time-data={{timeWeather}}></weather-item>
+        <weather-item is-opened="{{isTodayFirst(weatherData.date,index)}}" time-data={{timeWeather}}></weather-item>
       </template>
     </div>
     
@@ -37,6 +51,12 @@
 
       getDateString(dt){
         return (new Date(dt)).toDateString();
+      }
+
+      isTodayFirst(dt,ind){
+        if(ind !== 0)
+          return false;
+        return (new Date()).getDate() == (new Date(dt)).getDate();
       }
 
       

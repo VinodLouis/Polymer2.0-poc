@@ -1,4 +1,5 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../app-global.html">
 <dom-module id="weather-item">
@@ -8,21 +9,119 @@
       :host {
         display: block;
       }
+
+      .img-weather{
+        height:40px;
+      }
+
+      .arrow-div{
+        background-color: #ffffa1;
+      }
+
+      .title-time{
+        background-color: #ffffa1;
+        padding:3px 10px 3px 0px;
+        border-bottom: 1px solid #ffffd4;
+      }
+
+      .title-time:hover{
+        background-color:#ffff6e;
+        cursor: pointer; 
+      }
+
+      .item{
+        padding:3px 10px;
+        background-color: #ffffd4;
+        border-bottom: 1px solid #ffffa1;
+      }
+
+      .margin-right{
+        margin-right: 10px;
+      }
+
+      .pull-right{
+        text-align: right;
+      }
+
+      .opened-false{
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 15px 0 15px 10px;
+        border-color: transparent transparent transparent #bae1ff;
+      }
+
+      .opened-true{
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 10px 15px 0 15px;
+        border-color: #bae1ff transparent transparent transparent;
+      }
+
     </style>
-    <div class="flex">
-      <div>{{getTimeString(timeData.dt_txt)}}</div>
-      <template is="dom-repeat" items="{{timeData.weather}}" as="weather">
-        <div class="flex layout horizontal">
-          <div class="flex-12">{{weather.main}} - {{weather.description}}</div>
-          <div class="flex">
-            <img src="{{getImageIconURL(weather.icon)}}" />
+    <div class="flex time-wrapper">
+      
+        <template is="dom-repeat" items="{{timeData.weather}}" as="weather">
+          <div on-click="toggleContent" class="flex layout horizontal title-time">
+            <div class="layout vertical center-justified">
+                <div class$="opened-{{isOpened}}"></div>
+            </div>
+            <div class="flex-12 layout margin-right">
+              <div class="flex">{{getTimeString(timeData.dt_txt)}}</div>
+              <div class="flex">{{weather.main}} - {{weather.description}}</div>  
+            </div>
+            <div class="flex layout horizontal end-justified">
+              <img class="img-weather" src="{{getImageIconURL(weather.icon)}}" />
+            </div>
+          </div>
+        </template>
+
+      
+      <iron-collapse id="collapseContent" opened$="{{isOpened}}">
+        <div class="horizontal flex layout item">
+          <div class="flex-12 layout margin-right">
+            <div class="flex">Temperature</div>
+            <div class="flex">{{timeData.main.temp}}&#8490;</div> 
+          </div>
+          <div class="flex layout end-justified right-align">
+            <div class="flex pull-right"><small>Min : {{timeData.main.temp_min}}&#8490;</small></div>
+            <div class="flex pull-right"><small>Max : {{timeData.main.temp_max}}&#8490;</small></div>  
           </div>
         </div>
-      </template>
-      <div>
-       Temp : {{timeData.main.temp}} &#8490;
-      </div>
-    </div>
+        <div class="horizontal flex layout item">
+          <div class="flex-12 layout margin-right">Pressure</div>
+          <div class="flex layout horizontal end-justified">{{timeData.main.pressure}} Pa</div>
+        </div>
+        <div class="horizontal flex layout item">
+          <div class="flex-12 layout margin-right">Humidity</div>
+          <div class="flex layout horizontal end-justified">{{timeData.main.humidity}} %</div>
+        </div>
+        <div class="horizontal flex layout item">
+          <div class="flex-12 layout margin-right">Cloudy</div>
+          <div class="flex layout horizontal end-justified">{{timeData.clouds.all}} %</div>
+        </div>
+        <div class="flex layout item">
+          <div class="horizontal flex layout">
+            <div class="flex-12 margin-right">Wind Speed</div>
+            <div class="flex layout horizontal end-justified">{{timeData.wind.speed}}</div>
+          </div>
+          <div class="horizontal flex layout">
+            <div class="flex-12 margin-right">Wind Direction</div>
+            <div class="flex layout horizontal end-justified">{{timeData.wind.deg}}&#176;</div>
+          </div>
+        </div>   
+        <div class="horizontal flex layout item">
+          <div class="flex-12 layout margin-right">Rain in last 3 Hrs</div>
+          <div class="flex layout horizontal end-justified">{{fixToDecimal(timeData.rain.3h)}}</div>
+        </div>
+        <div class="horizontal flex layout item">
+          <div class="flex-12 layout margin-right">Snow in last 3 Hrs</div>
+          <div class="flex layout horizontal end-justified">{{fixToDecimal(timeData.snow.3h)}}</div>
+        </div>
+      </iron-collapse>
+         
+    </div>  
     <app-global id="constants"></app-global>
   </template>
 
@@ -37,6 +136,9 @@
         return {
           timeData: {
             type: Object
+          },
+          isOpened:{
+            type:Boolean
           }
         };
       }
@@ -51,8 +153,21 @@
       getImageIconURL(icon){
         return this.$.constants.URL.weather.icon + icon + ".png";
       }
-      
 
+      fixToDecimal(v){
+        if(!v || isNaN(v))
+          return "-"
+        return parseFloat(v).toFixed(2) + "mm";
+      }
+      
+      toggleContent(){
+        if(this.isOpened)
+          this.$.collapseContent.hide();
+        else
+          this.$.collapseContent.show();    
+        this.set('isOpened',!this.isOpened);
+        
+      }
       
     }
 
