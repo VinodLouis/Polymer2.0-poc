@@ -1,0 +1,7 @@
+{
+  "name": "Polymer2-0-poc",
+  "short_name": "Polymer2-0-poc",
+  "description": "Weater forecasting",
+  "start_url": "/",
+  "display": "standalone"
+}
