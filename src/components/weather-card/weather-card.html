@@ -1,18 +1,15 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../app-global.html">
 <link rel="import" href="./weather-item.html">
-<link rel="import" href="../../shared-styles.html">
 <dom-module id="weather-card">
   <template>
-    <style is="custom-style" include="iron-flex iron-flex-alignment shared-styles">
+    <style is="custom-style" include="iron-flex iron-flex-alignment">
     <style>
       :host {
         display: block;
       }
 
       .weather-card-wrapper{
-      
           margin:5px;
       }
 
@@ -30,8 +27,6 @@
         <weather-item is-opened="{{isTodayFirst(weatherData.date,index)}}" time-data={{timeWeather}}></weather-item>
       </template>
     </div>
-    
-    <app-global id="constants"></app-global>
   </template>
 
   <script>
@@ -57,9 +52,7 @@
         if(ind !== 0)
           return false;
         return (new Date()).getDate() == (new Date(dt)).getDate();
-      }
-
-      
+      } 
     }
 
     window.customElements.define(WeatherCard.is, WeatherCard);

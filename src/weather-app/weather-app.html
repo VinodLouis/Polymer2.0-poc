@@ -10,13 +10,9 @@
         padding:25px;
       }
     </style>
-    <div class="flex layout horizontal center-justified">Wether Forecast for the City [[city]].</div>
-    <div class="flex layout horizontal wrap">
-      <div class="layout flex-12"> 
-        <forecast-weather selected-city="{{city}}"></forecast-weather> 
-      </div>
-    </div>
-  </template>
+    <h2 style="text-align: center">Weather Forecast for City [[city]].</h2>
+    <forecast-weather selected-city="{{city}}"></forecast-weather> 
+    </template>
 
   <script>
     /**
@@ -29,7 +25,7 @@
         return {
           city: {
             type: String,
-            value: 'pune,in'
+            value: 'Pune,IN'
           }
         };
       }

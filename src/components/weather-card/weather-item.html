@@ -47,37 +47,35 @@
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 15px 0 15px 10px;
-        border-color: transparent transparent transparent #bae1ff;
+        border-width: 8px 0 8px 8px;
+        border-color: transparent transparent transparent #6ec0ff;
       }
 
       .opened-true{
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 10px 15px 0 15px;
-        border-color: #bae1ff transparent transparent transparent;
+        border-width: 8px 8px 0 8px;
+        border-color: #6ec0ff transparent transparent transparent;
       }
 
     </style>
     <div class="flex time-wrapper">
       
-        <template is="dom-repeat" items="{{timeData.weather}}" as="weather">
-          <div on-click="toggleContent" class="flex layout horizontal title-time">
-            <div class="layout vertical center-justified">
-                <div class$="opened-{{isOpened}}"></div>
-            </div>
-            <div class="flex-12 layout margin-right">
-              <div class="flex">{{getTimeString(timeData.dt_txt)}}</div>
-              <div class="flex">{{weather.main}} - {{weather.description}}</div>  
-            </div>
-            <div class="flex layout horizontal end-justified">
-              <img class="img-weather" src="{{getImageIconURL(weather.icon)}}" />
-            </div>
+      <template is="dom-repeat" items="{{timeData.weather}}" as="weather">
+        <div on-click="toggleContent" class="flex layout horizontal title-time">
+          <div class="layout vertical center-justified">
+              <div class$="opened-{{isOpened}}"></div>
           </div>
-        </template>
-
-      
+          <div class="flex-12 layout margin-right">
+            <div class="flex"><strong>{{getTimeString(timeData.dt_txt)}}</strong></div>
+            <div class="flex">{{weather.main}} - {{weather.description}}</div>  
+          </div>
+          <div class="flex layout horizontal end-justified">
+            <img class="img-weather" src="{{getImageIconURL(weather.icon)}}" />
+          </div>
+        </div>
+      </template>
       <iron-collapse id="collapseContent" opened$="{{isOpened}}">
         <div class="horizontal flex layout item">
           <div class="flex-12 layout margin-right">
@@ -120,7 +118,6 @@
           <div class="flex layout horizontal end-justified">{{fixToDecimal(timeData.snow.3h)}}</div>
         </div>
       </iron-collapse>
-         
     </div>  
     <app-global id="constants"></app-global>
   </template>
@@ -166,7 +163,6 @@
         else
           this.$.collapseContent.show();    
         this.set('isOpened',!this.isOpened);
-        
       }
       
     }
