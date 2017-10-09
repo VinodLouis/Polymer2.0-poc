@@ -13,7 +13,7 @@ Weater forecasting
 Application is live at [DEMO](http://www.vinodlouis.com/demos/weather-forecast)
 ## Runnig the Application
 
-GLobal dependency on [Polymer CLI](https://www.npmjs.com/package/polymer-cli) as its used as development server. The other libraries depedency are listed in bower.json file
+GLobal dependency on [Polymer CLI](https://www.npmjs.com/package/polymer-cli) as its used as development/testing server. The other libraries depedency are listed in bower.json file
 
 1. Clone the repo
 2. Do an `bower install`
@@ -39,3 +39,10 @@ $ polymer test
 ```
 
 Application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run application's test suite locally.
+
+
+## Improvements
+
+1. Design is currently not good just collapsible sort of instead should have been some table or carousel.
+2. If Visualization is thought of it would be interesting to convert this data to chart of time series.
+3. Unit test cases are incomplete as of now.
